@@ -1,0 +1,12 @@
+<h1 class="text-2xl font-bold mb-4">Lista de Adopciones</h1>
+<ul class="list-disc pl-5 space-y-2">
+    {{#each adoptions}}
+    <li class="flex items-center">
+        <span class="font-medium">{{this.pet.name}}</span>
+        <span class="mx-2">-</span>
+        <span class="text-gray-600">Adoptado por </span>
+        <span class="ml-2 font-semibold">{{this.user.firstName}}</span>
+    </li>
+
+    {{/each}}
+</ul>

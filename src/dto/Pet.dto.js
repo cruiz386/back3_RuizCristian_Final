@@ -1,4 +1,13 @@
 export default class PetDTO {
+    constructor(pets) {
+        this.name = pets.name;
+        this.specie = pets.specie;
+        this.image = pets.image;
+        this.birthDate = pets.birthDate;
+        this.adopted = pets.adopted;
+      
+    }
+
     static getPetInputFrom = (pet) =>{
         return {
             name:pet.name||'',

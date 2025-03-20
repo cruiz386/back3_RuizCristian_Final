@@ -1,0 +1,169 @@
+openapi: 3.0.0
+info:
+  title: Sessions API
+  version: 1.0.0
+paths:
+  /api/sessions/register:
+    post:
+      summary: Registra un nuevo usuario
+      tags: [Sessions]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterUser"
+      responses:
+        "201":
+          description: Usuario registrado con éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    type: string
+                    description: ID del usuario registrado
+        "400":
+          description: Valores incompletos o usuario ya existente
+        "500":
+          description: Error interno del servidor
+  /api/sessions/login:
+    post:
+      summary: Inicia sesión de usuario
+      tags: [Sessions]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginUser"
+      responses:
+        "200":
+          description: Inicio de sesión exitoso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Logged in
+                  token:
+                    type: string
+                    description: JWT token
+        "400":
+          description: Valores incompletos o contraseña incorrecta
+        "404":
+          description: Usuario no encontrado
+  /api/sessions/current:
+    get:
+      summary: Obtiene la información del usuario actual
+      tags: [Sessions]
+      responses:
+        "200":
+          description: Información del usuario actual
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    $ref: "#/components/schemas/User"
+        "401":
+          description: No autorizado
+  /api/sessions/unprotectedLogin:
+    post:
+      summary: Inicia sesión de usuario desprotegida (para pruebas)
+      tags: [Sessions]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginUser"
+      responses:
+        "200":
+          description: Inicio de sesión desprotegido exitoso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Unprotected Logged in
+                  token:
+                    type: string
+                    description: JWT token
+        "400":
+          description: Valores incompletos o contraseña incorrecta
+        "404":
+          description: Usuario no encontrado
+  /api/sessions/unprotectedCurrent:
+    get:
+      summary: Obtiene la información del usuario desprotegido (para pruebas)
+      tags: [Sessions]
+      responses:
+        "200":
+          description: Información del usuario desprotegido
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          description: No autorizado
+components:
+  schemas:components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID del usuario
+        first_name:
+          type: string
+          description: Nombre del usuario
+        last_name:
+          type: string
+          description: Apellido del usuario
+        email:
+          type: string
+          description: Email del usuario
+    RegisterUser:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: Nombre del usuario
+        last_name:
+          type: string
+          description: Apellido del usuario
+        email:
+          type: string
+          description: Email del usuario
+        password:
+          type: string
+          description: Contraseña del usuario
+    LoginUser:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email del usuario
+        password:
+          type: string
+          description: Contraseña del usuario

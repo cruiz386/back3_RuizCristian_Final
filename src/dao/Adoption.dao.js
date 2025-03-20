@@ -1,4 +1,5 @@
 import adoptionModel from "./models/Adoption.js";
+import {logger} from "../utils/logger.js";
 
 export default class Adoption {
 
@@ -11,11 +12,12 @@ export default class Adoption {
     }
 
     save = (doc) =>{
+        logger.info(`Saving adoption: ${JSON.stringify(doc)}`);
         return adoptionModel.create(doc);
     }
 
     update = (id,doc) =>{
-        return adoptionModel.findByIdAndUpdate(id,{$set:doc})
+        return adoptionModel.findByIdAndUpdate(id,{$set:doc}, { new: true }); 
     }
     
     delete = (id) =>{

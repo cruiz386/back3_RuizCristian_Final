@@ -7,16 +7,24 @@ export default class Users {
         return userModel.find(params);
     }
 
-    getBy = (params) =>{
-        return userModel.findOne(params);
-    }
+    getBy = (param) => {
+        if(typeof param === 'string'){
+            return userModel.findOne({_id: param});
+        }else{
+            return userModel.findOne(param);
+        }
+    };
 
     save = (doc) =>{
         return userModel.create(doc);
     }
 
+    addDocuments = (id, docs) => {
+        return userModel.findByIdAndUpdate(id, { $push: { documents: docs } }, { new: true });
+    }
+
     update = (id,doc) =>{
-        return userModel.findByIdAndUpdate(id,{$set:doc})
+        return userModel.findByIdAndUpdate(id,{$set:doc}, { new: true }); 
     }
 
     delete = (id) =>{

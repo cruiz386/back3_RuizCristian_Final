@@ -1,0 +1,13 @@
+<div class="container">
+    <h2>Usuarios</h2>
+    <ul>
+        {{#each users}}
+            <li>
+                <p>Nombre: {{this.firstName}} {{ this.lastName}}</p>
+                <p>Email: {{this.email}}</p>
+                <p>Rol: {{this.role}}</p>
+            </li>
+        {{/each}} 
+    </ul>
+</div>
+

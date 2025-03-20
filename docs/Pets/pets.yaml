@@ -1,0 +1,204 @@
+openapi: 3.0.0
+info:
+  title: Pets API
+  version: 1.0.0
+paths:
+  /api/pets:
+    get:
+      summary: Obtiene todas las mascotas
+      tags: [Pets]
+      responses:
+        '200':
+          description: Lista de mascotas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pet'
+    post:
+      summary: Crea una nueva mascota
+      tags: [Pets]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePet'
+      responses:
+        '201':
+          description: Mascota creada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        '400':
+          description: Datos de entrada inválidos
+        '500':
+          description: Error interno del servidor
+  /api/pets/withimage:
+    post:
+      summary: Crea una nueva mascota con imagen
+      tags: [Pets]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreatePetWithImage'
+      responses:
+        '201':
+          description: Mascota creada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        '400':
+          description: Datos de entrada inválidos
+        '500':
+          description: Error interno del servidor
+  /api/pets/{pid}:
+    get:
+      summary: Obtiene una mascota por ID
+      tags: [Pets]
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID de la mascota
+      responses:
+        '200':
+          description: Mascota encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        '404':
+          description: Mascota no encontrada
+    put:
+      summary: Actualiza una mascota por ID
+      tags: [Pets]
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID de la mascota
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePet'
+      responses:
+        '200':
+          description: Mascota actualizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        '404':
+          description: Mascota no encontrada
+        '400':
+          description: Datos de entrada inválidos
+        '500':
+          description: Error interno del servidor
+    delete:
+      summary: Elimina una mascota por ID
+      tags: [Pets]
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: ID de la mascota
+      responses:
+        '204':
+          description: Mascota eliminada con éxito (sin contenido)
+        '404':
+          description: Mascota no encontrada
+        '500':
+          description: Error interno del servidor
+components:
+  schemas:
+    Pet:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID de la mascota
+        name:
+          type: string
+          description: Nombre de la mascota
+        specie:
+          type: string
+          description: Especie de la mascota
+        birthDate:
+          type: string
+          format: date
+          description: Fecha de nacimiento de la mascota
+        adopted:
+          type: boolean
+          description: Estado de adopción
+        owner:
+          type: string
+          description: ID del dueño de la mascota
+        image:
+          type: string
+          description: URL de la imagen de la mascota
+    CreatePet:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre de la mascota
+        specie:
+          type: string
+          description: Especie de la mascota
+        birthDate:
+          type: string
+          format: date
+          description: Fecha de nacimiento de la mascota
+      required:
+        - name
+        - specie
+        - birthDate
+    CreatePetWithImage:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre de la mascota
+        specie:
+          type: string
+          description: Especie de la mascota
+        birthDate:
+          type: string
+          format: date
+          description: Fecha de nacimiento de la mascota
+        image:
+          type: string
+          format: binary
+          description: Imagen de la mascota
+      required:
+        - name
+        - specie
+        - birthDate
+        - image
+    UpdatePet:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre de la mascota
+        specie:
+          type: string
+          description: Especie de la mascota
+        birthDate:
+          type: string
+          format: date
+          description: Fecha de nacimiento de la mascota
