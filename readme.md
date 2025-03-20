@@ -2,6 +2,9 @@
 
 Aplicación de adopción de mascotas
 
+## Link Docker Hub - imagen
+https://hub.docker.com/r/cruiz386/proyectofinal
+
 ## Descripción
 
 Adoptme es una aplicación web que permite a los usuarios registrar y adoptar mascotas. La aplicación cuenta con un sistema de autenticación de usuarios, permitiendo a los usuarios crear una cuenta y iniciar sesión.
@@ -52,4 +55,5 @@ Para ver el listado de adopciones realizadas, se debe acceder a la ruta `/adopti
 ## Contribución
 
 Si deseas contribuir a este proyecto, por favor, haz un fork del repositorio y crea un pull request con tus cambios.
+
 
